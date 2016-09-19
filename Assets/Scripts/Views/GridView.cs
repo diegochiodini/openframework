@@ -19,13 +19,15 @@ namespace Game.Views
 
         private void Awake()
         {
-            Assert.IsNotNull(_template, "You must specify a template");
+            Assert.IsNotNull(_template, "You must specify a prefab template");
             _model = Locator.GetInterface<IGridModel>();
         }
 
         private void Start()
         {
+            //Access to models after Start so we are sure they are initialised.
             _tiles = new AbstractTile[_model.NumberOfTiles];
+
             int index = 0;
             for (int i = 0; i < _model.Rows; i++)
             {
@@ -34,14 +36,14 @@ namespace Game.Views
                     GameObject tileObject = Instantiate(_template, transform) as GameObject;
                     AbstractTile tile = tileObject.GetComponent<AbstractTile>();
                     tile.Init(_model.Get(i, j));
-                    tile.transform.localPosition = PositionOf(i, j);
+                    tile.transform.localPosition = LocalPositionOf(i, j);
                     _tiles[index] = tile;
                     index++;
                 }
             }
         }
 
-        private Vector3 PositionOf(int row, int column)
+        private Vector3 LocalPositionOf(int row, int column)
         {
             return new Vector3(column * _cellSize.x, row * _cellSize.y, 0f);
         }

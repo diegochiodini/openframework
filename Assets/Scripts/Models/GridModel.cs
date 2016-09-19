@@ -52,14 +52,6 @@ namespace Game.Models
             }
         }
 
-        public GameObject GameObject
-        {
-            get
-            {
-                return gameObject;
-            }
-        }
-
         private int[] _tiles;
 
         private void Awake()
