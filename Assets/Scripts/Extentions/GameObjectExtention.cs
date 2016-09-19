@@ -7,14 +7,19 @@ namespace Game.Extentions
 {
     public static class GameObjectExtensions
     {
-        public static T GetInterface<T>(this GameObject inObj) where T : IGameInterface
+        public static T GetInterface<T>(this GameObject sourceObject) where T : IGameInterface
         {
-            return inObj.GetComponents<Component>().OfType<T>().FirstOrDefault();
+            return GetInterfaces<T>(sourceObject).FirstOrDefault();
         }
 
-        public static IEnumerable<T> GetInterfaces<T>(this GameObject inObj) where T : IGameInterface
+        public static IEnumerable<T> GetInterfaces<T>(this GameObject sourceObject) where T : IGameInterface
         {
-            return inObj.GetComponents<Component>().OfType<T>();
+            IEnumerable<T> results = sourceObject.GetComponents<Component>().OfType<T>();
+            if (results == null || !results.Any())
+            {
+                throw new System.Exception(sourceObject.name + " can't find type of: " + typeof(T).Name);
+            }
+            return results;
         }
     } 
 }

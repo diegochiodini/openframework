@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Game.Models
 {
-    public class GridModel : MonoBehaviour, IGridModel
+    public class GridModel : ScriptableObject, IGridModel
     {
         public event System.Action<int, int> TileRemovedEvent;
 
@@ -54,7 +54,7 @@ namespace Game.Models
 
         private int[] _tiles;
 
-        private void Awake()
+        void OnEnable()
         {
             CreateRandomTiles();
         }
@@ -90,6 +90,11 @@ namespace Game.Models
         public int Get(int row, int column)
         {
             return _tiles[IndexOf(row, column)];
+        }
+
+        public void Populate()
+        {
+            CreateRandomTiles();
         }
     }
 }

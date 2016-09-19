@@ -20,7 +20,7 @@ namespace Game.Views
         private void Awake()
         {
             Assert.IsNotNull(_template, "You must specify a prefab template");
-            _model = Locator.GetInterface<IGridModel>();
+            _model = Locator.GetModel<IGridModel>();
         }
 
         private void Start()
