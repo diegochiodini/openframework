@@ -3,45 +3,49 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-public static class ScriptableObjectUtility
+namespace Game.Editor
 {
-    /// <summary>
-    //	This makes it easy to create, name and place unique new ScriptableObject asset files.
-    /// </summary>
-    public static void CreateAsset<T>() where T : ScriptableObject
+    public static class ScriptableObjectUtility
     {
-        T asset = ScriptableObject.CreateInstance<T>();
-        InternalCreateAsset(asset);
-    }
-
-    public static void CreateAsset(System.Type type)
-    {
-        ScriptableObject asset = ScriptableObject.CreateInstance(type);
-        Assert.IsNotNull(asset, "Can't create an instance of " + type.ToString());
-        InternalCreateAsset(asset);
-    }
-
-    private static void InternalCreateAsset(ScriptableObject asset)
-    {
-        string path = AssetDatabase.GetAssetPath(Selection.activeObject);
-        if (path == "")
+        /// <summary>
+        //	This makes it easy to create, name and place unique new ScriptableObject asset files.
+        /// </summary>
+        public static void CreateAsset<T>() where T : ScriptableObject
         {
-            path = "Assets";
-        }
-        else if (Path.GetExtension(path) != "")
-        {
-            path = path.Replace(Path.GetFileName(AssetDatabase.GetAssetPath(Selection.activeObject)), "");
+            T asset = ScriptableObject.CreateInstance<T>();
+            Assert.IsNotNull(asset, "Can't create an instance of " + typeof(T).Name);
+            InternalCreateAsset(asset);
         }
 
-        string assetPathAndName = AssetDatabase.GenerateUniqueAssetPath(path + "/" + asset.GetType().Name + ".asset");
+        public static void CreateAsset(System.Type type)
+        {
+            ScriptableObject asset = ScriptableObject.CreateInstance(type);
+            Assert.IsNotNull(asset, "Can't create an instance of " + type.ToString());
+            InternalCreateAsset(asset);
+        }
 
-        AssetDatabase.CreateAsset(asset, assetPathAndName);
+        private static void InternalCreateAsset(ScriptableObject asset)
+        {
+            string path = AssetDatabase.GetAssetPath(Selection.activeObject);
+            if (path == "")
+            {
+                path = "Assets";
+            }
+            else if (Path.GetExtension(path) != "")
+            {
+                path = path.Replace(Path.GetFileName(AssetDatabase.GetAssetPath(Selection.activeObject)), "");
+            }
 
-        AssetDatabase.SaveAssets();
-        AssetDatabase.Refresh();
-        EditorUtility.FocusProjectWindow();
-        Selection.activeObject = asset;
+            string assetPathAndName = AssetDatabase.GenerateUniqueAssetPath(path + "/" + asset.GetType().Name + ".asset");
 
-        Debug.Log(typeof(ScriptableObjectUtility).ToString() + "Create instance of " + assetPathAndName);
-    }
+            AssetDatabase.CreateAsset(asset, assetPathAndName);
+
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            EditorUtility.FocusProjectWindow();
+            Selection.activeObject = asset;
+
+            Debug.Log(typeof(ScriptableObjectUtility).ToString() + "Create instance of " + assetPathAndName);
+        }
+    } 
 }

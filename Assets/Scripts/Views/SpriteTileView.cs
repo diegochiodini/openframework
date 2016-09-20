@@ -8,11 +8,11 @@ namespace Game.Views
     [RequireComponent(typeof(SpriteRenderer))]
     public class SpriteTileView : AbstractTile
     {
-        private SpriteCache _cache;
+        private ICache<Sprite> _cache;
 
         private void Awake()
         {
-            _cache = Locator.Get<SpriteCache>();
+            _cache = Locator.GetModel<ICache<Sprite>>();
         }
 
         public override void Init(int type)
