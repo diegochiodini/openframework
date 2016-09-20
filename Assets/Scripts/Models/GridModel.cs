@@ -1,11 +1,12 @@
-﻿using Game.Abstractions;
+﻿using System;
+using Game.Abstractions;
 using UnityEngine;
 
 namespace Game.Models
 {
-    public class GridModel : ScriptableObject, IGridModel
+    public class GridModel : ScriptableObject, IGridModel<int>
     {
-        public event System.Action<int, int> TileRemovedEvent;
+        public event Action<int, int, int> TileRemovedEvent;
 
         [SerializeField]
         private int _rows;
@@ -82,7 +83,7 @@ namespace Game.Models
             int index = IndexOf(row, column);
             if (TileRemovedEvent != null)
             {
-                TileRemovedEvent(row, column);
+                TileRemovedEvent(row, column, _tiles[index]);
             }
             _tiles[index] = -1;
         }

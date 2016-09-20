@@ -29,9 +29,25 @@ public class Locator : MonoBehaviour
         IEnumerable<T> results = _instance._assets.OfType<T>();
         if (results == null || !results.Any())
         {
-            throw new System.Exception("Locator can't find type of: " + typeof(T).Name);
+            string message = string.Format("Locator can't find type of: {0}. Please check if the asset has a valid Script field", typeof(T).Name);
+            throw new System.Exception(message);
         }
 
         return results;
+    }
+
+    public static void PrintAssets()
+    {
+        if (_instance._assets == null || _instance._assets.Length == 0)
+        {
+            Debug.LogWarning("Locator assets are null or empty");
+        }
+        else
+        {
+            foreach (var item in _instance._assets)
+            {
+                Debug.Log("Locator: " + item);
+            }
+        }
     }
 }

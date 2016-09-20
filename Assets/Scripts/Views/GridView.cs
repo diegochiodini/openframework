@@ -12,19 +12,21 @@ namespace Game.Views
         [SerializeField]
         private Vector2 _cellSize;
 
-        private IGridModel _model;
+        private IGridModel<int> _model;
         private AbstractTile[] _tiles;
 
         private void Awake()
         {
             Assert.IsNotNull(_template, "You must specify a prefab template");
-            _model = Locator.GetModel<IGridModel>();
+            _model = Locator.GetModel<IGridModel<int>>();
         }
 
         private void Start()
         {
             //Access models after Start so we are sure they are initialised.
             _tiles = new AbstractTile[_model.NumberOfTiles];
+
+            Locator.PrintAssets();
 
             int index = 0;
             for (int i = 0; i < _model.Rows; i++)

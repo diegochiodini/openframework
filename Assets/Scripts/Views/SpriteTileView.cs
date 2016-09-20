@@ -1,5 +1,5 @@
 ﻿using Game.Abstractions;
-using Game.Models;
+using Game.Models.Cache;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -8,11 +8,14 @@ namespace Game.Views
     [RequireComponent(typeof(SpriteRenderer))]
     public class SpriteTileView : AbstractTile
     {
-        private ICache<Sprite> _cache;
+        private static SpriteCache _cache = null;
 
         private void Awake()
         {
-            _cache = Locator.GetModel<ICache<Sprite>>();
+            if (_cache == null)
+            {
+                _cache = Locator.GetModel<SpriteCache>();
+            }
         }
 
         public override void Init(int type)

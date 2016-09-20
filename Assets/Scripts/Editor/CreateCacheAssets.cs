@@ -1,4 +1,4 @@
-﻿using Game.Models;
+﻿using Game.Models.Cache;
 using UnityEditor;
 using UnityEngine;
 
@@ -37,6 +37,5 @@ namespace Game.Editor
         {
             ScriptableObjectUtility.CreateAsset<CacheModel<GameObject>>();
         }
-
     }
 }

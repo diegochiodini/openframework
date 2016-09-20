@@ -29,7 +29,7 @@ namespace Game.Editor
             string path = AssetDatabase.GetAssetPath(Selection.activeObject);
             if (path == "")
             {
-                path = "Assets";
+                path = "Assets/Scripts/Models";
             }
             else if (Path.GetExtension(path) != "")
             {
