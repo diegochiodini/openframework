@@ -91,10 +91,5 @@ namespace Game.Models
         {
             return _tiles[IndexOf(row, column)];
         }
-
-        public void Populate()
-        {
-            CreateRandomTiles();
-        }
     }
 }

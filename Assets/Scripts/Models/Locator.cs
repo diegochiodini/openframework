@@ -1,9 +1,6 @@
-﻿using Game.Abstractions;
-using Game.Extentions;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 public class Locator : MonoBehaviour
 {
@@ -15,18 +12,6 @@ public class Locator : MonoBehaviour
     private void Awake()
     {
         _instance = this;
-    }
-
-    public static T Get<T>() where T : Component
-    {
-        T result = _instance.GetComponent<T>();
-        Assert.IsNotNull(result);
-        return result;
-    }
-
-    public static T GetInterface<T>() where T : IGameInterface
-    {
-        return _instance.gameObject.GetInterface<T>();
     }
 
     public static T GetModel<T>() where T : IModel

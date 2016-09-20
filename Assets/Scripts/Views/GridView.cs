@@ -1,8 +1,6 @@
 ﻿using Game.Abstractions;
-using Game.Views;
 using UnityEngine;
 using UnityEngine.Assertions;
-using Game.Extentions;
 
 namespace Game.Views
 {
@@ -25,7 +23,7 @@ namespace Game.Views
 
         private void Start()
         {
-            //Access to models after Start so we are sure they are initialised.
+            //Access models after Start so we are sure they are initialised.
             _tiles = new AbstractTile[_model.NumberOfTiles];
 
             int index = 0;
@@ -47,5 +45,5 @@ namespace Game.Views
         {
             return new Vector3(column * _cellSize.x, row * _cellSize.y, 0f);
         }
-    } 
+    }
 }
